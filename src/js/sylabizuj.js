@@ -30,7 +30,10 @@ export function sylabizuj(word) {
 
     for (let i = 0; i < phones.length; i++) {
       if (offset + phones[i].data.length <= word.length) {
-        if (phones[i].data === word.substring(offset, offset + phones[i].data.length)) {
+        if (
+          phones[i].data ===
+          word.substring(offset, offset + phones[i].data.length)
+        ) {
           wordPhones.push(phones[i]);
           offset += phones[i].data.length;
           unknownCharacter = false;
@@ -39,7 +42,7 @@ export function sylabizuj(word) {
       }
     }
     if (unknownCharacter) {
-      wordPhones.push({type: "consonant", data: word[offset]});
+      wordPhones.push({ type: "consonant", data: word[offset] });
       offset += 1;
     }
   }
@@ -72,7 +75,10 @@ export function sylabizuj(word) {
     //
     for (let i = 1; i < syllables.length; i++) {
       if (syllables[i].length > 2) {
-        if (syllables[i][0].type === "consonant" && syllables[i][1].type === "consonant") {
+        if (
+          syllables[i][0].type === "consonant" &&
+          syllables[i][1].type === "consonant"
+        ) {
           syllables[i - 1].push(syllables[i].shift());
         }
       }
@@ -81,7 +87,7 @@ export function sylabizuj(word) {
     // Merge the whole last syllable if it has no vowels.
     //
     let last = syllables.length - 1;
-    let noVowels = syllables[last].every(value => value.type === "consonant")
+    let noVowels = syllables[last].every((value) => value.type === "consonant");
     if (noVowels) {
       syllables[last - 1] = syllables[last - 1].concat(syllables[last]);
       syllables.pop();
@@ -91,12 +97,12 @@ export function sylabizuj(word) {
   // Create final result array of strings.
   //
   let result = [];
-  syllables.forEach(value => {
+  syllables.forEach((value) => {
     let resultSyllable = "";
-    value.forEach(value2 => {
+    value.forEach((value2) => {
       resultSyllable += value2.data;
     });
     result.push(resultSyllable);
-  })
+  });
   return result;
 }
